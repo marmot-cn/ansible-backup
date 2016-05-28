@@ -1,0 +1,3 @@
+#安装仓库所有需要的镜像
+
+- include: nginx.yml

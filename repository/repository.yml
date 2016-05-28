@@ -1,0 +1,5 @@
+- name: Config Saas Repository
+  hosts: repository
+  roles: 
+    - common
+    - backend

@@ -1,0 +1,21 @@
+- name: pull registry image
+  docker_image:
+    name: registry
+
+- name: Ensures registry docker-compose.yml dir exists
+  file: path=~/docker-compose/registry state=directory
+            
+# 复制docker-compose.yml 文件            
+- name: copy registry docker-compose.yml
+  copy: 
+    src: registry-docker-compose.yml
+    dest: ~/docker-compose/registry/docker-compose.yml
+    owner: "{{ ansible_user }}" 
+    group: "{{ ansible_user }}"
+
+# 启动registry
+- name: start registry
+  command: docker-compose up -d
+  args:
+    chdir: ~/docker-compose/registry/
+

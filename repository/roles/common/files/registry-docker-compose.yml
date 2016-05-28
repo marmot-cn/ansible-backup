@@ -1,0 +1,7 @@
+registry:
+  image: "registry:latest"
+  ports:
+   - "5000:5000"
+  volumes:
+   - "/data/docker-registry:/tmp/registry"
+  container_name: self-registry

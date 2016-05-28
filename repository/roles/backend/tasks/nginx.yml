@@ -1,0 +1,15 @@
+#编译nginx 相关镜像
+
+#编译api.lvsaas.com nginx 镜像
+
+- name: build {{ production_nginx_image_name }} nginx
+  tags:
+    - nginx
+    - production
+  docker_image:
+    name: "{{ saas_registry_url }}/nginx"
+    path: "{{ docker_images_build_dir }}/nginx/{{ production_nginx_image_name }}" 
+    repository: "{{ saas_registry_url }}"
+    tag: "{{ production_nginx_image_tag }}" 
+   
+            

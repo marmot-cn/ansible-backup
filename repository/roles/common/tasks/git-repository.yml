@@ -1,0 +1,6 @@
+# 初始化docker镜像仓库
+- name: initial docker image source from git
+  git: 
+    repo: https://github.com/chloroplast1983/images.git 
+    dest: "~/{{ docker_images_build_dir }}"
+    accept_hostkey: True

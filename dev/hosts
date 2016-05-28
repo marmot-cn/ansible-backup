@@ -1,0 +1,5 @@
+[dev]
+
+testerver ansible_host=120.24.3.210 ansible_port=22 ansible_user=ansible 
+
+

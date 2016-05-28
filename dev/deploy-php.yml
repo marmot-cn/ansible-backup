@@ -1,0 +1,5 @@
+- name: Deploy php dev environment on server
+  hosts: dev
+  roles: 
+    - common
+
