@@ -1,0 +1,9 @@
+# 格式化硬盘
+#- include: format-disk.yml
+
+# 创建swap
+#- include: swap.yml
+
+# 修改hostname
+- include: hostname.yml
+

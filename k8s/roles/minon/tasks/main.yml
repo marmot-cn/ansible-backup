@@ -1,0 +1,29 @@
+# 服务器安装我们必须用的软件
+- name: Install yum packages
+  become: True
+  yum: name={{ item }} update_cache=yes
+  with_items:
+    - docker  
+    - kubernetes-node
+    - flannel
+
+# 开机启动服务
+- name: systemctl enable services
+  become: True
+  command: systemctl enable {{ item }}
+  with_items:
+    - flanneld
+    - kubelet
+    - kube-proxy
+
+# 修改docker配置
+- include: docker.yml
+
+# 修改k8s.kubelet 配置
+- include: k8s-kubelet.yml
+
+# 修改k8s.kube-proxy 配置
+- include: k8s-kube-proxy.yml
+
+# 修改flannel 配置
+- include: flannel.yml

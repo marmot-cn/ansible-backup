@@ -1,0 +1,22 @@
+# 添加docker用户
+- name: Make sure we have a 'docker' group, user can join docker group and run docker with non-root
+  become: True
+  group:
+    name: docker
+    state: present
+
+# 把我们的操作用户添加入docker组
+- name: add docker group to ansible user
+  become: True
+  user:
+    name: ansible
+    groups: docker
+    append: yes
+
+# 复制docker 服务的配置文件,我们修改了docker存储的路径,添加了访问官方镜像的代理
+- name: set the docker config file
+  become: True
+  template:
+    src: docker-config.j2
+    dest: /etc/sysconfig/docker
+  notify: restart docker

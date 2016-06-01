@@ -1,0 +1,2 @@
+k8s_masterIP: "10.170.148.109"
+k8s_etcd_key: "coreos.com"

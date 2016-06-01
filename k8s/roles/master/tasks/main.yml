@@ -1,0 +1,29 @@
+# 服务器安装我们必须用的软件
+- name: Install yum packages
+  become: True
+  yum: name={{ item }} update_cache=yes
+  with_items:
+    - etcd
+    - kubernetes-master
+
+# 开机启动服务
+- name: systemctl enable services
+  become: True
+  command: systemctl enable {{ item }}
+  with_items:
+    - etcd
+    - kube-apiserver
+    - kube-scheduler
+    - kube-controller-manager
+
+# 修改etcd 配置
+- include: etcd.yml
+
+# 修改k8s.apiserver 配置
+- include: k8s-apiserver.yml
+
+# 修改k8s.controller-manager 配置
+- include: k8s-controller-manager.yml
+
+# 修改k8s.scheduler 配置
+- include: k8s-scheduler.yml

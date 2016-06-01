@@ -1,0 +1,11 @@
+- name: restart docker
+  service: name=docker state=restarted
+  become: true
+
+- name: restart kube-proxy 
+  service: name=kube-proxy state=restarted
+  become: true
+
+- name: restart kubelet
+  service: name=kubelet state=restarted
+  become: true

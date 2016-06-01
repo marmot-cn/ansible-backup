@@ -1,0 +1,7 @@
+# 复制 flannel 配置文件
+- name: set the /etc/sysconfig/flanneld config file
+  become: True
+  template:
+    src: flanneld.j2
+    dest: /etc/sysconfig/flanneld
+  notify: restart flanneld
