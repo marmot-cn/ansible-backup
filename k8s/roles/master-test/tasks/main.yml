@@ -1,6 +1,6 @@
 # 服务器安装我们必须用的软件
 - name: Install yum packages
-  become: True
+  become: true
   yum: name={{ item }} update_cache=yes
   with_items:
     - etcd
@@ -8,13 +8,19 @@
 
 # 开机启动服务
 - name: systemctl enable services
-  become: True
+  become: true
   command: systemctl enable {{ item }}
   with_items:
     - etcd
     - kube-apiserver
     - kube-scheduler
     - kube-controller-manager
+
+# 格式化磁盘
+- include: format-disk.yml
+
+# 创建交换分区
+- include: swap.yml
 
 # 修改etcd 配置
 - include: etcd.yml
@@ -27,3 +33,6 @@
 
 # 修改k8s.scheduler 配置
 - include: k8s-scheduler.yml
+
+# 定义flannel 网络配置
+- include: flannel.yml

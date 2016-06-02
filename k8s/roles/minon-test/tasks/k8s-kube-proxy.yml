@@ -1,6 +1,6 @@
 #复制 kube-proxy 配置文件
 - name: set the /etc/kubernetes/config config file
-  become: True
+  become: true
   template:
     src: k8s-config.j2
     dest: /etc/kubernetes/config

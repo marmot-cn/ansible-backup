@@ -1,6 +1,6 @@
 # 服务器安装我们必须用的软件
-- name: Install yum packages
-  become: True
+- name: install yum packages
+  become: true
   yum: name={{ item }} update_cache=yes
   with_items:
     - docker  
@@ -9,12 +9,19 @@
 
 # 开机启动服务
 - name: systemctl enable services
-  become: True
+  become: true
   command: systemctl enable {{ item }}
   with_items:
     - flanneld
     - kubelet
     - kube-proxy
+
+# 格式化硬盘
+
+# 创建交换分区
+
+# docker 使用direct-lvm代替loopback
+- include: docker-direct-lvm.yml
 
 # 修改docker配置
 - include: docker.yml
@@ -27,3 +34,4 @@
 
 # 修改flannel 配置
 - include: flannel.yml
+

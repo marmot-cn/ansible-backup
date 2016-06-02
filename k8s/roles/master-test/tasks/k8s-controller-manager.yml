@@ -1,0 +1,7 @@
+#复制 k8s-controller-manager 配置文件
+- name: copy controller-manager config file
+  become: true
+  template:
+    src: controller-manager.j2
+    dest: /etc/kubernetes/controller-manager
+  notify: restart kube-controller-manager

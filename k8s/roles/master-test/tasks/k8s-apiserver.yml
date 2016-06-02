@@ -1,0 +1,7 @@
+#复制 k8s-apiserver 配置文件
+- name: copy apiserver config file
+  become: true
+  template:
+    src: apiserver.j2
+    dest: /etc/kubernetes/apiserver
+  notify: restart kube-apiserver

@@ -1,0 +1,22 @@
+#创建交换分区存储文件夹
+- name: create swap file dir
+  file: path=/data/swap state=directory mode=0755
+
+#创建交换分区文件
+- name: create swap file
+  command: sudo dd if=/dev/zero of=/data/swap/swap-file  bs=1G count={{ swap_size }} creates=/data/swap/swap-file
+
+#建立 swap 文件系统
+- name: mkswap
+  command: mkswap /data/swap/swap-file
+  become: true
+
+#启用交换分区
+- name: swapon
+  command: swapon /data/swap/swap-file
+  become: true
+
+#挂在交换分区
+- name: mount swap
+  mount: name=/data/swap/swap-file src=swap fstype=swap state=present
+  become: true

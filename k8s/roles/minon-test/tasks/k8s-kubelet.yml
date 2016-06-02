@@ -1,6 +1,6 @@
 #复制kubelet 配置文件
 - name: set the /etc/kubernetes/kubelet config file
-  become: True
+  become: true
   template:
     src: k8s-kubelet.j2
     dest: /etc/kubernetes/kubelet
