@@ -1,6 +1,0 @@
-- name: Deploy k8s minon on server
-  hosts: k8s-minon 
-  roles: 
-    - common 
-    - minon
-

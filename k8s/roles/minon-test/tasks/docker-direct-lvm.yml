@@ -1,1 +1,26 @@
-# 格式化硬盘
+# 硬盘分区
+- name: docker lvm disk partion
+  script: disk.sh "{{ docker_lvm_disk }}"
+  become: true
+
+# 检查 lvm 有无被设置
+#- name: lvdisplay 
+# command: lvdisplay
+# become: true
+# register: result
+# debug: var=result
+# tags:
+#   - lvm
+          
+# 设置 docker-storage-setup 配置文件
+- name: set docker-storage-setup config file
+  become: true
+  template:
+    src: docker-stroage-setup.j2
+    dest: /etc/sysconfig/docker-storage-setup
+  notify: restart docker
+
+# 运行 docker-storage-setup
+- name: run docker-storage-setup
+  command: docker-storage-setup
+  become: true

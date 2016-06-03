@@ -1,0 +1,7 @@
+# 部署 k8s minon 节点
+- name: Deploy k8s minon on server
+  hosts: k8s-minon-test
+  roles: 
+    - common 
+    - minon-test
+

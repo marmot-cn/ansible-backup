@@ -1,0 +1,6 @@
+#部署 k8s master 节点
+- name: deploy k8s master on server
+  hosts: k8s-master-test
+  roles: 
+    - common
+    - master-test

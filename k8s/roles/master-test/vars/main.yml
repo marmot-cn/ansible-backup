@@ -1,2 +1,3 @@
 data_disk: "/dev/xvdb"
 data_disk_partion: "/dev/xvdb1"
+data_disk_mount_dir: "/data"

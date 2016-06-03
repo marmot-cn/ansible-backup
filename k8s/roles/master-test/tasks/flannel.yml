@@ -1,4 +1,4 @@
 #定义flannel网络配置到etcd,这个配置会推送到各个minions的flannel服务上
 - name: config flannel to etcd
-  command: etcdctl mk "/{{ k8s_etcd_key }}/network/config" '{"Network":"172.17.0.0/16"}'
+  command: etcdctl set "/{{ k8s_etcd_key }}/network/config" '{"Network":"172.17.0.0/16"}'
   become: true

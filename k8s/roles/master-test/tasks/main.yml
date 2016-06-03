@@ -1,3 +1,8 @@
+# 更新服务器软件包
+- name: upgrade all packages
+  yum: name=* state=latest
+  become: true
+
 # 服务器安装我们必须用的软件
 - name: Install yum packages
   become: true
@@ -33,6 +38,17 @@
 
 # 修改k8s.scheduler 配置
 - include: k8s-scheduler.yml
+
+# 启动服务所有服务
+- name: start all services
+  service: name={{ item }} state=started
+  become: true
+  with_items:
+    - etcd
+    - kube-apiserver
+    - kube-scheduler
+    - kube-controller-manager
+
 
 # 定义flannel 网络配置
 - include: flannel.yml

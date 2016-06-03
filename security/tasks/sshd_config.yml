@@ -1,0 +1,13 @@
+#复制 /etc/ssh/sshd_config 配置文件
+- name: copy sshd_config
+  become: true
+  template:
+    src: templates/sshd_config.j2
+    dest: /etc/ssh/sshd_config
+    mode: 0600
+  notify: restart sshd
+
+#sshd 服务重启触发器
+- name: restart sshd
+  service: name=sshd state=restarted
+  become: true

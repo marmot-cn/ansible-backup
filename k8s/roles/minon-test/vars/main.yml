@@ -1,2 +1,6 @@
 k8s_masterIP: "10.170.148.109"
 saas_registry_proxy: "https://rtrkym8x.mirror.aliyuncs.com"       
+docker_lvm_disk: "/dev/xvdb"
+data_disk: "/dev/xvdc"
+data_disk_partion: "/dev/xvdc1"
+data_disk_mount_dir: "/data"

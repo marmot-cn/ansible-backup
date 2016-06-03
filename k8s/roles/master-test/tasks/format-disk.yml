@@ -5,7 +5,9 @@
   
 #格式化硬盘
 - name: data disk format ext4
-  filesystem: fstype=ext4 dev="{{ data_disk_partion }}" opts="-cc"
+  filesystem: 
+    fstype: ext4 
+    dev: "{{ data_disk_partion }}" 
   become: true
 
 #挂在硬盘
