@@ -5,7 +5,7 @@
 
 #创建交换分区文件
 - name: create swap file
-  command: "sudo dd if=/dev/zero of=/data/swap/swap-file  bs=1k count={{ swap_size }} creates=/data/swap/swap-file"
+  command: "dd if=/dev/zero of=/data/swap/swap-file  bs=1k count={{ swap_size }} creates=/data/swap/swap-file"
   become: true
 
 #建立 swap 文件系统
