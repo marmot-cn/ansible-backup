@@ -1,0 +1,17 @@
+# 修改host
+- include: host.yml
+
+# 更新代码
+- include: update-code.yml
+
+# 更新 git 钩子
+- include: git-hooks.yml
+
+# 复制 docker-compose.yml 模板
+- include: docker-compose-template.yml
+
+# 启动容器
+- include: start-containers.yml
+  
+# 更新数据
+# include: update-mysql.yml

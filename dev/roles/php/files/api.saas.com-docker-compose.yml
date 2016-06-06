@@ -1,0 +1,48 @@
+nginx:
+ image: "registry.aliyuncs.com/marmot/nginx-api.lvsaas.com"
+ ports:
+  - "80:80"
+ links:
+  - "phpfpm"
+ volumes:
+  - /data/html/api.saas.com:/usr/share/nginx/html
+  - /log/nginx/api.saas.com:/var/log/nginx
+ container_name: web-nginx
+
+phpfpm:
+  image: "registry.aliyuncs.com/marmot/php7-dev" 
+  volumes:
+   - /data/html/api.saas.com:/var/www/html/
+  links:
+   - "memcached-1:memcached_1"
+   - "memcached-2:memcached_2"
+   - "mysql-master:dbw"
+  container_name: web-phpfpm
+
+mysql-master:
+  image: "registry.aliyuncs.com/marmot/mysql:5.6"
+  volumes:
+  - /data/mysql/:/var/lib/mysql
+  environment:
+   - MYSQL_ROOT_PASSWORD=123456
+  container_name: web-mysql-master
+
+memcached-1:
+  image: "registry.aliyuncs.com/marmot/memcached:latest"
+  command: memcached -m 32
+  container_name: web-memcached1
+
+memcached-2:
+  image: "registry.aliyuncs.com/marmot/memcached:latest"
+  command: memcached -m 32
+  container_name: web-memcached2
+
+phpmyadmin:
+  image: "registry.aliyuncs.com/marmot/phpmyadmin:latest"
+  links:
+   - "mysql-master:mysql"
+  ports:
+   - "10081:80"
+  environment:
+   - UPLOAD_SIZE=1G
+  container_name: web-phpmyadmin

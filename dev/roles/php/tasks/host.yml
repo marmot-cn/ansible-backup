@@ -1,0 +1,9 @@
+# 添加 github 有时网络访问不到
+- name: add github to hosts
+  lineinfile: dest=/etc/hosts line="192.30.252.131  github.com"
+  become: true
+
+# 添加 api.saas.com 
+- name: add api.saas.com to hosts
+  lineinfile: dest=/etc/hosts line="127.0.0.1  api.saas.com"
+  become: true

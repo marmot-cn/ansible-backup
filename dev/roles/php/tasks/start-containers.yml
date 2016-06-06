@@ -1,0 +1,5 @@
+# 开启镜像
+- name: start containers
+  command: docker-compose up -d
+  args:
+    chdir: ~/docker-compose/api.saas.com/ 

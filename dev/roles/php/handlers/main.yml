@@ -1,0 +1,5 @@
+# 更新compose
+- name: update compose
+  command: docker exec web-phpfpm composer update
+  tags:
+    - update-compose

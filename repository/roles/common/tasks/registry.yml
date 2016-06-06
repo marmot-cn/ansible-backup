@@ -2,7 +2,7 @@
   docker_image:
     name: registry
 
-- name: Ensures registry docker-compose.yml dir exists
+- name: ensures registry docker-compose.yml dir exists
   file: path=~/docker-compose/registry state=directory
             
 # 复制docker-compose.yml 文件            

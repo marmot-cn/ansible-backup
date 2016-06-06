@@ -1,0 +1,24 @@
+# 确认文件夹存在
+- name: ensures data dir exists
+  file: path=/data/html state=directory 
+  become: true
+
+# 更新代码
+- name: update code from git
+  become: true
+  git:
+    repo: https://github.com/chloroplast1983/api.saas.com.git
+    dest: /data/html/api.saas.com
+    accept_hostkey: true
+    version: dev
+  notify: update compose
+  tags:
+    - update-code
+
+# 更新config
+- name: copy api.saas.com config
+  copy: src=api.saas.com-config.php dest=/data/html/api.saas.com/config.php
+  become: true
+  tags:
+    - update-config
+
