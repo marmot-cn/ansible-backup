@@ -1,7 +1,7 @@
-#复制kubelet 配置文件
-- name: set the /etc/kubernetes/kubelet config file
+#复制kubelet
+- copy: src=kubelet dest=/usr/bin/kubelet owner=root group=root mode=0755
   become: true
-  template:
-    src: k8s-kubelet.j2
-    dest: /etc/kubernetes/kubelet
-  notify: restart kubelet
+
+#执行kubelet.sh
+- script: kubelet.sh "{{ k8s_masterIP }}" "{{ ansible_host }}"
+  become: true

@@ -1,7 +1,7 @@
-#复制 k8s-controller-manager 配置文件
-- name: copy controller-manager config file
+# 复制kube-controller-manager执行文件
+- copy: src=kube-controller-manager dest=/usr/bin/kube-controller-manager owner=root group=root mode=0755
   become: true
-  template:
-    src: controller-manager.j2
-    dest: /etc/kubernetes/controller-manager
-  notify: restart kube-controller-manager
+
+# 执行kube-controller-manager.sh
+- script: controller-manager.sh "{{ ansible_host }}" 
+  become: true

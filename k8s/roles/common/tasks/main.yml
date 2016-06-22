@@ -1,3 +1,6 @@
 # 修改hostname
 - include: hostname.yml
 
+# 创建配置文件夹
+- file: path=/opt/kubernetes/cfg state=directory mode=0755
+  become: true

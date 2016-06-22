@@ -1,7 +1,7 @@
-#复制 kube-proxy 配置文件
-- name: set the /etc/kubernetes/config config file
+#复制kube-proxy 执行文件
+- copy: src=kube-proxy dest=/usr/bin/kube-proxy owner=root group=root mode=0755
   become: true
-  template:
-    src: k8s-config.j2
-    dest: /etc/kubernetes/config
-  notify: restart kube-proxy
+
+#执行proxy.sh
+- script: proxy.sh "{{ k8s_masterIP }}" "{{ ansible_host }}"
+  become: true

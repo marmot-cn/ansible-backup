@@ -3,23 +3,17 @@
   yum: name=* state=latest
   become: true
 
+# 复制docker-engine的源
+- copy: src=docker.repo dest=/etc/yum.repos.d/docker.repo owner=root group=root mode=0655
+  become: true
+    
 # 服务器安装我们必须用的软件
 - name: install yum packages
   become: true
   yum: name={{ item }} update_cache=yes 
   with_items:
-    - docker  
-    - kubernetes-node
+    - docker 
     - flannel
-
-# 开机启动服务
-- name: systemctl enable services
-  become: true
-  command: systemctl enable {{ item }}
-  with_items:
-    - flanneld
-    - kubelet
-    - kube-proxy
 
 # 格式化硬盘
 - include: format-disk.yml
@@ -28,7 +22,10 @@
 - include: swap.yml
 
 # docker 使用direct-lvm代替loopback
-- include: docker-direct-lvm.yml
+#- include: docker-rect-lvm.yml
+
+# 修改flannel 配置,因为flannel的脚本会再flannel服务启动时候关闭docker0网管,所以要再docker运行前运行
+- include: flannel.yml
 
 # 修改docker配置
 - include: docker.yml
@@ -39,15 +36,7 @@
 # 修改k8s.kube-proxy 配置
 - include: k8s-kube-proxy.yml
 
-# 修改flannel 配置
-- include: flannel.yml
-
-# 启动服务所有服务
-- name: start all services
+# 修改k8s的路由bug
+- name: fix k8s bug 
+  command: ip route add "{{ service_cluster_ip_range }}" dev docker0
   become: true
-  service: name={{ item }} state=started 
-  with_items:
-    - flanneld
-    - docker
-    - kubelet
-    - kube-proxy

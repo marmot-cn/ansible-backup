@@ -1,7 +1,11 @@
-# 复制 flannel 配置文件
-- name: set the /etc/sysconfig/flanneld config file
+#复制mk-docker-opts.sh
+- copy: src=mk-docker-opts.sh dest=/usr/local/bin/mk-docker-opts.sh owner=root group=root mode=0755
   become: true
-  template:
-    src: flanneld.j2
-    dest: /etc/sysconfig/flanneld
-  notify: restart flanneld
+
+#复制remove-docker0.sh
+- copy: src=remove-docker0.sh dest=/usr/local/bin/remove-docker0.sh owner=root group=root mode=0755
+  become: true
+
+#运行flannel.sh
+- script: flannel.sh "{{ etcd_server }}" "{{ etcd_key }}"
+  become: true

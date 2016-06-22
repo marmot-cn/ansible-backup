@@ -1,9 +1,11 @@
-#复制 k8s-apiserver 配置文件
-- name: copy apiserver config file
+#复制kube-apiserver 执行文件
+- copy: src=kube-apiserver dest=/usr/bin/kube-apiserver owner=root group=root mode=0755
   become: true
-  template:
-    src: apiserver.j2
-    dest: /etc/kubernetes/apiserver
-  notify: restart kube-apiserver
-          
 
+#复制kubelet 执行文件
+- copy: src=kubectl dest=/usr/bin/kubectl owner=root group=root mode=0755
+  become: true
+
+#执行apiserver.sh
+- script: apiserver.sh "0.0.0.0" "{{ etcd_server }}" "{{ service_cluster_ip_range }}"
+  become: true

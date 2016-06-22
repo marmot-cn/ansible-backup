@@ -9,7 +9,7 @@
   yum: name={{ item }} update_cache=yes
   with_items:
     - etcd
-    - kubernetes-master
+    - flannel
 
 # 开机启动服务
 - name: systemctl enable services
@@ -17,9 +17,6 @@
   command: systemctl enable {{ item }}
   with_items:
     - etcd
-    - kube-apiserver
-    - kube-scheduler
-    - kube-controller-manager
 
 # 格式化磁盘
 - include: format-disk.yml
@@ -31,24 +28,24 @@
 - include: etcd.yml
 
 # 修改k8s.apiserver 配置
-- include: k8s-apiserver.yml
+- name: include k8s-apiserver.yml
+  include: k8s-apiserver.yml
 
 # 修改k8s.controller-manager 配置
-- include: k8s-controller-manager.yml
+- name: include k8s-controller-manager
+  include: k8s-controller-manager.yml
 
 # 修改k8s.scheduler 配置
-- include: k8s-scheduler.yml
+- name: include k8s-scheduler.yml
+  include: k8s-scheduler.yml
+
+# 修改flannel 配置
+- name: include flannel.yml
+  include: flannel.yml
 
 # 启动服务所有服务
 - name: start all services
-  service: name={{ item }} state=started
   become: true
+  service: name={{ item }} state=started
   with_items:
-    - etcd
-    - kube-apiserver
-    - kube-scheduler
-    - kube-controller-manager
-
-
-# 定义flannel 网络配置
-- include: flannel.yml
+    - flanneld

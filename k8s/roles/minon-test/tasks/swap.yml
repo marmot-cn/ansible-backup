@@ -8,14 +8,19 @@
   command: "dd if=/dev/zero of=/data/swap/swap-file  bs=1k count={{ swap_size }} creates=/data/swap/swap-file"
   become: true
 
-#建立 swap 文件系统
-- name: mkswap
-  command: mkswap /data/swap/swap-file 
+- name: check swap file type    
+  command: file /data/swap/swap-file
+  register: swapfile
   become: true
 
-#启用交换分区
+- name: make swap
+  command: mkswap /data/swap/swap-file
+  when: swapfile.stdout.find('swap file') == -1
+  become: true
+   
 - name: swapon
-  command: swapon /data/swap/swap-file
+  command: swapon /data/swap/swap-file 
+  when: ansible_swaptotal_mb < 1
   become: true
 
 #挂在交换分区
