@@ -17,6 +17,17 @@ then
 fi
 echo -e "code style check: ${GREEN}success${NORMAL}"
 
+# 运行重复代码检查
+echo -e "php copy paste detect: ${YELLOW}start${NORMAL}"
+docker exec web-phpfpm vendor/bin/phpcpd ./Application
+
+if [ $? -ne 0 ]
+then
+  echo -e "php copy paste detect: ${RED}fail${NORMAL}"
+  exit 1
+fi
+echo -e "php copy paste detect: ${GREEN}success${NORMAL}"
+
 # 运行单元测试检查 
 echo -e "unit test: ${YELLOW}start${NORMAL}"
 docker exec web-phpfpm vendor/bin/phpunit
