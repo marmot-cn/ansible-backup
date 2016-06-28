@@ -71,6 +71,12 @@
 		ansible test --limit minon1 -m ping
 		
 
+**tags**
+
+执行符合tag的task
+
+		ansible-playbook xxx.yml --tags="tag1,tag2"
+
 ###剧本
 
 ####dev
