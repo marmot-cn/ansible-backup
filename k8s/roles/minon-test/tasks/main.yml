@@ -36,7 +36,13 @@
 # 修改k8s.kube-proxy 配置
 - include: k8s-kube-proxy.yml
 
+# 获取现在route 信息
+- name: check route whether exist
+  command: bash -c  "/usr/sbin/ip route | awk '{print $1}'"
+  register: routeInfo
+
 # 修改k8s的路由bug
 - name: fix k8s bug 
-  command: ip route add "{{ service_cluster_ip_range }}" dev docker0
+  command: /usr/sbin/ip route add "{{ service_cluster_ip_range }}" dev docker0
   become: true
+  when: routeInfo.stdout.find("{{ service_cluster_ip_range }}") == -1 
