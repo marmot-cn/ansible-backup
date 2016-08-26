@@ -1,3 +1,11 @@
 # 修改hostname
 - include: hostname.yml
 
+# 更新服务器软件包
+- name: upgrade all packages
+  yum: name=* state=latest
+  become: true
+
+# 安装docker
+- include: docker.yml
+

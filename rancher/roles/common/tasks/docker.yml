@@ -1,0 +1,63 @@
+# 安装 docker 的 yum 源
+- name: add docker repository
+  yum_repository:
+    name: dockerrepo
+    description: YUM docker repo
+    file: docker.repo
+    baseurl: https://yum.dockerproject.org/repo/main/centos/7/
+    enabled: yes
+    gpgcheck: yes
+    gpgkey: https://yum.dockerproject.org/gpg 
+
+# 安装 docker-engine
+- name: install docker
+  yum: name=docker-engine state=present
+
+# 开机启动docker
+- name: systemctl enable docker.service
+  command: systemctl enable docker.service
+
+# ansible 的 docker 模块需要 docker-py library 
+- name: install dependencies
+  yum: 
+      name={{ item }} 
+      update_cache=yes
+  with_items: 
+      - python-devel
+      - python-setuptools
+
+# 安装 python library pip
+- name: install pip
+  easy_install: 
+      name=pip 
+
+# 安装 docker-py
+- name: install docker-py
+  pip: 
+      name=docker-py 
+      state=present
+      version=1.1.0
+
+# 添加 docker 用户
+- name: make sure we have a 'docker' group, user can join docker group and run docker with non-root
+  become: true
+  group:
+    name: docker
+    state: present
+
+# 把我们的操作用户添加入 docker 组
+- name: add docker group to ansible user
+  become: true
+  user:
+    name: ansible
+    groups: docker
+    append: yes
+
+# 修改 docker 配置文件
+
+# 开启所有服务
+- name: start all services
+  become: true
+  service: name={{ item }} state=started
+  with_items:
+    - docker
