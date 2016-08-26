@@ -6,6 +6,11 @@
   yum: name=* state=latest
   become: true
 
-# 安装docker
-- include: docker.yml
+# 关闭selinux
+- name: close selinux
+  selinux: state=disabled
 
+# 安装docker
+- name: close selinux
+  include: docker.yml
+  ignore_errors: True  

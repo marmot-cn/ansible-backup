@@ -5,11 +5,24 @@
 - include: swap.yml
 
 # 下载搭建rancher镜像
-- name: RancherOS rancher/server
-  docker:
-    name: rancherserver
+- name: pull an image
+  docker_image:
+    name: rancher/server
+  tags:
+    - server
+    - image
+
+- name: rancher/server
+  docker_container:
+    name: rancher-server
     image: rancher/server
-    state: reloaded
+    state: started
+    recreate: yes
     restart_policy: always
     ports:
     - "8080:8080"
+    volumes:
+    - "/data/mysql:/var/lib/mysql"
+  tags:
+    - server
+    - container
