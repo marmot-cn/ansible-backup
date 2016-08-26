@@ -1,13 +1,51 @@
-  - name: RancherOS rancher/agent
-    docker:
-      name: rancheragent
-      image: rancher/agent
-      privileged: True
-      state: reloaded
-      restart_policy: always
-      volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      command: "{{ url_contents }}"
-      env:
-        CATTLE_AGENT_IP: "{{ ip_contents }}"
-        CATTLE_HOST_LABELS: "{{ labels_contents }}"
+# 格式化磁盘
+- include: format-disk.yml
+
+# 创建交换分区
+- include: swap.yml
+
+# 安装httplib2
+- name: install httplib2
+  yum: name=python-httplib2 state=present
+
+- name: Get the default project id
+  action: uri
+    method=GET
+    status_code=200
+    url="http://{{ rancher_server }}:{{ rancher_port }}/v1/projects" return_content=yes
+  register: project_id
+
+- name: Return the registration token URL of Rancher server
+  action: uri 
+    method=POST
+    status_code=201
+    url="http://{{ rancher_server }}:{{ rancher_port }}/v1/registrationtokens?projectId={{ project_id.json['data'][0]['id'] }}" return_content=yes
+  register: rancher_token_url
+
+- name: return the registration URL of Rancher server
+  action: uri 
+    method=GET 
+    url={{ rancher_token_url.json['links']['self'] }} return_content=yes
+  register: rancher_token
+
+- name: pull images
+  docker_image:
+    name: rancher/agent
+    tag: v{{ rancher_agent_version }}
+    state: present
+
+- name: check if the rancher-agent is running
+  command: docker ps -a
+  register: containers
+
+- name: register the Host machine with the Rancher server
+  command: docker run -e CATTLE_AGENT_IP="{{ ansible_host }}" -d --privileged -v /var/run/docker.sock:/var/run/docker.sock -v /var/lib/rancher:/var/lib/rancher rancher/agent:v{{ rancher_agent_version }} "{{ rancher_token.json['registrationUrl'] }}"
+
+#  docker_container:
+#    name: rancher-agent
+#    image: rancher/agent:v{{ rancher_agent_version }} 
+#    state: started
+#    privileged: yes
+#    detach: True
+#    volumes: /var/run/docker.sock:/var/run/docker.sock
+#    command: "{{ rancher_token.json['registrationUrl'] }}"
