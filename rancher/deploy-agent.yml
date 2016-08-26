@@ -1,0 +1,7 @@
+# 部署 rancher agent 节点
+- name: deploy rancher agent
+  hosts: k8s-minon-test
+  roles: 
+    - common 
+    - agent
+

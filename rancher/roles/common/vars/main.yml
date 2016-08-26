@@ -1,0 +1,3 @@
+etcd_key: "/k8s-test/network/"
+etcd_server: "http://10.170.148.109:4001"
+service_cluster_ip_range: "10.254.0.0/16"
