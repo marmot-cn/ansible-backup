@@ -1,6 +1,7 @@
 #部署 rancher server 节点
 - name: deploy rancher server
   hosts: rancherserver
+  become: true
   roles: 
     - common
     - server

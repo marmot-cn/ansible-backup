@@ -13,3 +13,7 @@
 - name: restart kube-controller-manager
   service: name=kube-controller-manager state=restarted
   become: true
+
+- name: restart flanneld
+  service: name=flanneld state=restarted
+  become: true

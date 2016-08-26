@@ -13,10 +13,6 @@
     groups: docker
     append: yes
 
-# 复制docker 服务的配置文件,我们修改了docker存储的路径,添加了访问官方镜像的代理
-- name: set the docker config file
+#运行docker.sh
+- script: docker.sh
   become: true
-  template:
-    src: docker-config.j2
-    dest: /etc/sysconfig/docker
-  notify: restart docker
