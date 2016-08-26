@@ -60,7 +60,7 @@
 
 更改我们的登陆端口,以及禁止root登陆的操作
 
-
+		ansible-playbook security.yml
 
 ###常用操作
 
