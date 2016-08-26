@@ -1,0 +1,56 @@
+# 更新服务器软件包
+- name: upgrade all packages
+  yum: name=* state=latest
+  become: true
+
+# 安装 docker 的 yum 源
+- name: add docker repository
+  yum_repository:
+    name: dockerrepo
+    description: YUM docker repo
+    file: docker.repo
+    baseurl: https://yum.dockerproject.org/repo/main/centos/7/
+    enabled: yes
+    gpgcheck: yes
+    gpgkey: https://yum.dockerproject.org/gpg 
+
+# 安装 docker-engine
+- name: install docker
+  yum: name=docker-engine state=present
+
+# ansible 的 docker 模块需要 docker-py library 
+- name: install dependencies
+  yum: 
+      name={{ item }} 
+      update_cache=yes
+  with_items: 
+      - python-devel
+      - python-setuptools
+
+# 安装 python library pip
+- name: install pip
+  easy_install: 
+      name=pip 
+
+# 安装 docker-py
+- name: install docker-py
+  pip: 
+      name=docker-py 
+      state=present
+      version=1.1.0
+
+# 格式化磁盘
+- include: format-disk.yml
+
+# 创建交换分区
+- include: swap.yml
+
+# 下载搭建rancher镜像
+- name: RancherOS rancher/server
+  docker:
+    name: rancherserver
+    image: rancher/server
+    state: reloaded
+    restart_policy: always
+    ports:
+    - "8080:8080"
