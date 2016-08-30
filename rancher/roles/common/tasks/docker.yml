@@ -56,6 +56,7 @@
 # 创建配置文件夹
 - name: create docker config file dir
   file: path=/etc/systemd/system/docker.service.d state=directory mode=0755
+  notify: restart docker
 
 - name: copy config file
   template: 
@@ -63,9 +64,8 @@
     dest: /etc/systemd/system/docker.service.d/docker.conf
   notify: restart docker
 
-# 开启所有服务
-- name: start all services
-  become: true
-  service: name={{ item }} state=started
+# 重启所有服务
+- name: restart docker
+  service: name={{ item }} state=restarted
   with_items:
     - docker
