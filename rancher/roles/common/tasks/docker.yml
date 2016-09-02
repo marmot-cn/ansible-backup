@@ -1,21 +1,46 @@
 # 安装 docker 的 yum 源
-- name: add docker repository
-  yum_repository:
-    name: dockerrepo
-    description: YUM docker repo
-    file: docker.repo
-    baseurl: https://yum.dockerproject.org/repo/main/centos/7/
-    enabled: yes
-    gpgcheck: yes
-    gpgkey: https://yum.dockerproject.org/gpg 
+# - name: add docker repository
+#   yum_repository:
+#     name: dockerrepo
+#     description: YUM docker repo
+#     file: docker.repo
+#     baseurl: https://yum.dockerproject.org/repo/main/centos/7/
+#     enabled: yes
+#     gpgcheck: yes
+#     gpgkey: https://yum.dockerproject.org/gpg 
 
 # 安装 docker-engine
+# - name: install docker
+#   yum: name=docker-engine state=present
+
+# 安装 docker
 - name: install docker
-  yum: name=docker-engine state=present
+  yum: name=docker state=present
 
 # 开机启动docker
 - name: systemctl enable docker.service
   command: systemctl enable docker.service
+
+# 复制docker 服务的配置文件,我们修改了docker存储的路径,添加了docker的私有仓库地址(方便我们更新镜像)
+- name: set the docker config file
+  become: true
+  template:
+    src: docker-config.j2
+    dest: /etc/sysconfig/docker
+  notify: restart docker
+  
+# 设置 docker-storage-setup 配置文件
+- name: set docker-storage-setup config file
+  become: true
+  template:
+    src: docker-storage-setup.j2
+    dest: /etc/sysconfig/docker-storage-setup
+  notify: restart docker
+
+# 运行 docker-storage-setup
+- name: run docker-storage-setup
+  command: docker-storage-setup
+  become: true
 
 # ansible 的 docker 模块需要 docker-py library 
 - name: install dependencies
@@ -54,15 +79,15 @@
 
 # 修改 docker 配置文件
 # 创建配置文件夹
-- name: create docker config file dir
-  file: path=/etc/systemd/system/docker.service.d state=directory mode=0755
-  notify: restart docker
+# - name: create docker config file dir
+#   file: path=/etc/systemd/system/docker.service.d state=directory mode=0755
+#   notify: restart docker
 
-- name: copy config file
-  template: 
-    src: docker.conf.j2
-    dest: /etc/systemd/system/docker.service.d/docker.conf
-  notify: restart docker
+# - name: copy config file
+#   template: 
+#     src: docker.conf.j2
+#     dest: /etc/systemd/system/docker.service.d/docker.conf
+#   notify: restart docker
 
 # 重启所有服务
 - name: restart docker
