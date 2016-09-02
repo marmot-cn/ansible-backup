@@ -30,20 +30,20 @@
   notify: restart docker
   
 # 设置 docker-storage-setup 配置文件
-- name: set docker-storage-setup config file
-  become: true
-  template:
-    src: docker-storage-setup.j2
-    dest: /etc/sysconfig/docker-storage-setup
-  notify: restart docker
+#- name: set docker-storage-setup config file
+#  become: true
+#  template:
+#    src: docker-storage-setup.j2
+#    dest: /etc/sysconfig/docker-storage-setup
+#  notify: restart docker
 
 # 运行 docker-storage-setup
-- name: run docker-storage-setup
-  command: docker-storage-setup
-  become: true
+#- name: run docker-storage-setup
+#  command: docker-storage-setup
+#  become: true
 
 # ansible 的 docker 模块需要 docker-py library 
-- name: install dependencies
+#- name: install dependencies
   yum: 
       name={{ item }} 
       update_cache=yes
@@ -90,7 +90,7 @@
 #   notify: restart docker
 
 # 重启所有服务
-- name: restart docker
-  service: name={{ item }} state=restarted
-  with_items:
-    - docker
+#- name: restart docker
+#  service: name={{ item }} state=restarted
+#  with_items:
+#    - docker
