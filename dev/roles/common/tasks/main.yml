@@ -51,14 +51,13 @@
     dest: /etc/sysconfig/docker
   notify: restart docker
 
+# 关闭selinux
+- name: close selinux
+  selinux: state=disabled
+  
 # 开启所有服务
 - name: start all services
   become: true
   service: name={{ item }} state=started
   with_items:
     - docker
-
-# 关闭selinux
-- name: close selinux
-  command: setenforce 0
-  become: true

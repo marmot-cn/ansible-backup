@@ -81,15 +81,19 @@
 
 ####dev
 
-主要用于部署我们的开发电脑,详细见 [dev play book](./doc/dev.md "dev play book")
+主要用于部署我们的开发电脑,详细见 [dev play book](./dev "dev play book")
 
 ####k8s
 
-主要用于k8s的master和minon节点部署,详细见 [k8s play book](./doc/k8s.md "k8s play book")
+主要用于k8s的`master`和`minon`节点部署,详细见 [k8s play book](./k8s "k8s play book")
+
+####rancher
+
+主要用于rancher的`server`和`agent`节点部署,详细见 [rancher play book](./ancher "ancher play book")
 
 ####security
 
-主要用于部署服务器安全性的剧本,在给服务器添加用ansible用户后(上述操作),运行该脚本统一配置服务器的一些安全化设置,详细见 [security play book](./doc/security.md "security play book")
+主要用于部署服务器安全性的剧本,在给服务器添加用ansible用户后(上述操作),运行该脚本统一配置服务器的一些安全化设置,详细见 [security play book](./security "security play book")
 
 ####repository
 

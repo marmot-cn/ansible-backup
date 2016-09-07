@@ -15,10 +15,10 @@
   tags:
     - update-code
 
-# 更新config
-- name: copy api.saas.com config
-  copy: src=api.saas.com-config.php dest=/data/html/api.saas.com/config.php
-  become: true
-  tags:
-    - update-config
+# 更新config,改为从 confd 更新环境
+# - name: copy api.saas.com config
+#   copy: src=api.saas.com-config.php dest=/data/html/api.saas.com/config.php
+#   become: true
+#   tags:
+#     - update-config
 

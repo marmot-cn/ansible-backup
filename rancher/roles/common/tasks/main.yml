@@ -12,5 +12,4 @@
 
 # 安装docker
 - name: close selinux
-  include: docker.yml
-  ignore_errors: True  
+  include: docker.yml 
