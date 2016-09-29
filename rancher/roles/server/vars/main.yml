@@ -1,8 +1,2 @@
-#docker_lvm_disk: "/dev/xvdb"
-
-data_disk: "/dev/xvdb"
-data_disk_partion: "/dev/xvdb1"
-data_disk_mount_dir: "/data"
-
 rancher_name: "rancher-server"
 rancher_port: "8080"

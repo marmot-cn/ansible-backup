@@ -1,1 +1,6 @@
 registry_proxy: "https://rtrkym8x.mirror.aliyuncs.com" 
+disk_data: "/dev/xvdb"
+disk_data_partion: "/dev/xvdb1"
+disk_data_mount_dir: "/data"
+disk_lvm: "/dev/xvdc"
+disk_lvm_partion: "/dev/xvdc1"

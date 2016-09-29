@@ -3,7 +3,7 @@
 #   lineinfile: dest=/etc/hosts line="192.30.252.131  github.com"
 #   become: true
 
-# 添加 api.saas.com 
-- name: add api.saas.com to hosts
-  lineinfile: dest=/etc/hosts line="127.0.0.1  api.saas.com"
+# 添加 www.marmot.com 
+- name: add www.marmot.com to hosts
+  lineinfile: dest=/etc/hosts line="127.0.0.1  http://www.marmot.com/"
   become: true

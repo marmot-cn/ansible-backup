@@ -8,11 +8,13 @@ CHECK_EXIST=`fdisk -l 2> /dev/null | grep -o "$DISK"`
 CHECK_DISK_EXIST=`fdisk -l 2> /dev/null | grep -o "$DISK[1-9]"`
 [ ! "$CHECK_DISK_EXIST" ] || { echo "WARNING: ${CHECK_DISK_EXIST} is Partition already !"; exit 0;}
 
-fdisk -S 56 $DISK<<EOF  
+fdisk $DISK<<EOF  
 n
 p
 1
 
 
+t
+8e
 wq
-EOF
+EOF	

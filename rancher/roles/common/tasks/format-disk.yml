@@ -1,16 +1,16 @@
 #硬盘分区
 - name: data disk partion
-  script: disk.sh "{{ data_disk }}"
+  script: disk.sh "{{ disk_data }}"
   become: true
   
 #格式化硬盘
 - name: data disk format ext4
   filesystem: 
     fstype: ext4 
-    dev: "{{ data_disk_partion }}" 
+    dev: "{{ disk_data_partion }}" 
   become: true
 
 #挂载硬盘
 - name: mount data disk
-  mount: name="{{ data_disk_mount_dir }}" src="{{ data_disk_partion }}" fstype=ext4 state=mounted
+  mount: name="{{ disk_data_mount_dir }}" src="{{ disk_data_partion }}" fstype=ext4 state=mounted
   become: true

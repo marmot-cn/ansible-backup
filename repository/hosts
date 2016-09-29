@@ -1,5 +1,0 @@
-[repository]
-
-testerver ansible_host=120.24.3.210 ansible_port=17456 ansible_user=ansible 
-
-

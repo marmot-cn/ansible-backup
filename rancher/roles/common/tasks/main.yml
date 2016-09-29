@@ -10,6 +10,15 @@
 - name: close selinux
   selinux: state=disabled
 
+# 格式化数据盘磁盘
+- include: format-disk.yml
+
+# 格式化lvm磁盘
+- include: format-lvm-disk.yml
+
+# 创建交换分区
+- include: swap.yml
+
 # 安装docker
-- name: close selinux
+- name: install
   include: docker.yml 

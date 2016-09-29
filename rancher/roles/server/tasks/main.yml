@@ -1,16 +1,6 @@
-# 格式化磁盘
-- include: format-disk.yml
-
-# 创建交换分区
-- include: swap.yml
-
 # 下载搭建rancher镜像
-#- name: pull an image
-#  docker_image:
-#    name: rancher/server
-#  tags:
-#    - server
-#    - image
+- name: pull an image
+  command: docker pull rancher/server
 
 #- name: rancher/server
 #  docker_container:

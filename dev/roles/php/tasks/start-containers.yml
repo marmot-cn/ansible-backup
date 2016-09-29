@@ -2,4 +2,4 @@
 - name: start containers
   command: docker-compose up -d
   args:
-    chdir: ~/docker-compose/api.saas.com/ 
+    chdir: /data/html/marmot

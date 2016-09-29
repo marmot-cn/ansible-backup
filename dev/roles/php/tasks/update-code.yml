@@ -7,8 +7,8 @@
 - name: update code from git
   become: true
   git:
-    repo: https://github.com/chloroplast1983/api.saas.com.git
-    dest: /data/html/api.saas.com
+    repo: https://github.com/chloroplast1983/marmot.git
+    dest: /data/html/marmot
     accept_hostkey: true
     version: dev
   notify: update compose

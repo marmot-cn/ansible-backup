@@ -1,6 +1,7 @@
 - name: Deploy php dev environment on server
   hosts: dev
+  become: true
   roles: 
-          #- common
-    - php
+    - common
+    # - php
 

@@ -46,9 +46,15 @@
 		[root@iZ94xwu3is8Z ~]# ll -s /etc/sudoers
 		4 -r--r----- 1 root root 4000 6月   3 13:59 /etc/sudoers
 
+#####执行操作命令
+
+		ssh root@xxxx "useradd ansible;passwd ansible;usermod -aG wheel  ansible;chmod 755 /etc/sudoers;sed -i '105 s/^/# /g' /etc/sudoers;sed -i '108 s/# //g' /etc/sudoers;chmod 440 /etc/sudoers"
+		
+复制执行,输入ansible的密码即可.
+
 ####ansible免登陆
 
-		cat ~/.ssh/id_rsa.pub | ssh ansible@120.24.3.210 "umask 077; mkdir -p .ssh ; cat >> .ssh/authorized_keys"
+		cat ~/.ssh/id_rsa.pub | ssh ansible@xxxxx "umask 077; mkdir -p .ssh ; cat >> .ssh/authorized_keys"
 
 ####`/etc/sudoers`
 
@@ -70,7 +76,6 @@
 
 		ansible test --limit minon1 -m ping
 		
-
 **tags**
 
 执行符合tag的task
