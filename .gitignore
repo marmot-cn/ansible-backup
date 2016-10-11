@@ -1,4 +1,4 @@
 *.retry
 *.swp
 .DS_Store
-hosts
+host.yml
