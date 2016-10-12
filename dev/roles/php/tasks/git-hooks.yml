@@ -1,6 +1,6 @@
 # 更新 git 钩子
 - name: update git pre-commit hook 
-  copy: src=/data/html/marmot/pre-commit dest=/data/html/marmot/.git/hooks/ mode=0755 
+  copy: src=~/data/html/monkey/pre-commit dest=~/data/html/monkey/.git/hooks/ mode=0755 
   become: true
   tags:
     - hooks-pre-commit

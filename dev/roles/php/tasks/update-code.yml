@@ -7,10 +7,10 @@
 - name: update code from git
   become: true
   git:
-    repo: https://github.com/chloroplast1983/marmot.git
-    dest: /data/html/marmot
+    repo: https://github.com/chloroplast1983/monkey.git
+    dest: ~/data/html/monkey
     accept_hostkey: true
-    version: dev
+    version: master
   notify: update compose
   tags:
     - update-code

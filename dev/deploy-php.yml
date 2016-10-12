@@ -2,6 +2,6 @@
   hosts: dev
   become: true
   roles: 
-    - common
-    # - php
+    # - common
+    - php
 
