@@ -16,14 +16,14 @@
 	* `docker`
 * 开机启动`docker`服务
 * 添加`docker`用户组
-* `ansible`用户加入`docker`用户组
+* `ansible`用户加入`docker`用户组,方便ansible用户操作docker
 * 复制`docker-compose`编排工具
 * 修改`docker`的配置文件`/etc/sysconfig/docker/`
 * 关闭`selinux`
 * 开启服务
 	* `docker`
 	
-####php
+####php(暂时未使用到该剧本)
 
 **修改`/etc/hosts`**
 
