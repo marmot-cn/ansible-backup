@@ -18,6 +18,6 @@
   command: swapon /data/swap/swap-file 
   when: ansible_swaptotal_mb < 1
 
-#挂在交换分区
+#挂载交换分区
 - name: mount swap
   mount: name=/data/swap/swap-file src=swap fstype=swap state=present

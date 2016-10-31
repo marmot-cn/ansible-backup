@@ -33,10 +33,6 @@
   template:
     src: docker-storage-config.j2
     dest: /etc/sysconfig/docker-storage
-
-# 重启 docker
-- name: restart docker
-  service: name=docker state=restarted
   
 # 设置 docker-storage-setup 配置文件 (docker 默认脚本)
 #- name: set docker-storage-setup config file
@@ -71,7 +67,7 @@
 #       name=docker-py 
 #       state=latest
 
-# 添加 docker 用户
+# 添加 docker 用户组
 - name: make sure we have a 'docker' group, user can join docker group and run docker with non-root
   group:
     name: docker
@@ -97,7 +93,11 @@
 #   notify: restart docker
 
 # 启动服务
+# - name: restart docker
+#   service: name={{ item }} state=started
+#   with_items:
+#     - docker
+
+# 重启 docker
 - name: restart docker
-  service: name={{ item }} state=started
-  with_items:
-    - docker
+  service: name=docker state=restarted
