@@ -1,2 +1,2 @@
-rancher_name: "rancher-server"
+rancher_name: "rancher-server:stable"
 rancher_port: "8080"

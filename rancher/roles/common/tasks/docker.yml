@@ -1,71 +1,35 @@
 # 安装 docker 的 yum 源 (docker engine)
-# - name: add docker repository
-#   yum_repository:
-#     name: dockerrepo
-#     description: YUM docker repo
-#     file: docker.repo
-#     baseurl: https://yum.dockerproject.org/repo/main/centos/7/
-#     enabled: yes
-#     gpgcheck: yes
-#     gpgkey: https://yum.dockerproject.org/gpg 
+- name: add docker repository
+  yum_repository:
+    name: dockerrepo
+    description: YUM docker repo
+    file: docker.repo
+    baseurl: https://yum.dockerproject.org/repo/main/centos/7/
+    enabled: yes
+    gpgcheck: yes
+    gpgkey: https://yum.dockerproject.org/gpg 
 
 # 安装 docker-engine (docker engine)
-# - name: install docker
-#   yum: name=docker-engine state=present
-
-# 安装 docker
-- name: install docker
-  yum: name=docker-1.10.3 state=present
+- name: install docker 1.12.3
+  yum: name=docker-engine-1.12.3 state=present
 
 # 开机启动docker
 - name: systemctl enable docker.service
   command: systemctl enable docker.service
 
-# 复制d ocker 服务的配置文件,我们修改了docker存储的路径,添加了docker的私有仓库地址(方便我们更新镜像)
-- name: copy docker config file
-  template:
-    src: docker-config.j2
-    dest: /etc/sysconfig/docker
-  notify: restart docker
+# 复制docker 服务的配置文件,我们修改了docker存储的路径,添加了docker的私有仓库地址(方便我们更新镜像)
+# - name: copy docker config file
+#   template:
+#     src: docker-config.j2
+#     dest: /etc/sysconfig/docker
+#   notify: restart docker
 
 # 复制 docker-storage 配置文件.修改了 docker 的存储形式 direct-lvm
-- name: copy docker-storage config file
-  template:
-    src: docker-storage-config.j2
-    dest: /etc/sysconfig/docker-storage
-  
-# 设置 docker-storage-setup 配置文件 (docker 默认脚本)
-#- name: set docker-storage-setup config file
-#  become: true
-#  template:
-#    src: docker-storage-setup.j2
-#    dest: /etc/sysconfig/docker-storage-setup
-#  notify: restart docker
+# - name: copy docker-storage config file
+#   template:
+#     src: docker-storage-config.j2
+#     dest: /etc/sysconfig/docker-storage
 
-# 运行 docker-storage-setup (docker 默认脚本)
-#- name: run docker-storage-setup
-#  command: docker-storage-setup
-#  become: true
-
-# # ansible 的 docker 模块需要 docker-py library 
-# - name: install dependencies
-#   yum: 
-#       name={{ item }} 
-#       update_cache=yes
-#   with_items: 
-#       - python-devel
-#       - python-setuptools
-
-# # 安装 python library pip
-# - name: install pip
-#   easy_install: 
-#       name=pip 
-
-# # 安装 docker-py
-# - name: install docker-py
-#   pip: 
-#       name=docker-py 
-#       state=latest
 
 # 添加 docker 用户组
 - name: make sure we have a 'docker' group, user can join docker group and run docker with non-root
@@ -82,22 +46,23 @@
 
 # 修改 docker 配置文件 (docker engine)
 # 创建配置文件夹
-# - name: create docker config file dir
-#   file: path=/etc/systemd/system/docker.service.d state=directory mode=0755
-#   notify: restart docker
+- name: create docker config file dir
+  file: path=/etc/systemd/system/docker.service.d state=directory mode=0755
 
-# - name: copy config file (docker engine)
-#   template: 
-#     src: docker.conf.j2
-#     dest: /etc/systemd/system/docker.service.d/docker.conf
-#   notify: restart docker
+- name: copy config file (docker engine)
+  template: 
+    src: docker.conf.j2
+    dest: /etc/systemd/system/docker.service.d/docker.conf
+
+- name: systemctl daemon-reload
+  command: systemctl daemon-reload
 
 # 启动服务
-# - name: restart docker
-#   service: name={{ item }} state=started
-#   with_items:
-#     - docker
+- name: restart docker
+  service: name={{ item }} state=started
+  with_items:
+    - docker
 
 # 重启 docker
-- name: restart docker
-  service: name=docker state=restarted
+# - name: restart docker
+#   service: name=docker state=restarted
