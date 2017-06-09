@@ -20,5 +20,9 @@
 - include: swap.yml
 
 # 安装docker
-- name: install
+- name: install docker
   include: docker.yml 
+
+# 安装ctop
+- name: install ctop
+  include: ctop.yml

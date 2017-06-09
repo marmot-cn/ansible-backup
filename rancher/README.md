@@ -1,4 +1,4 @@
-#Rancher
+# rancher
 
 ----
 
@@ -8,7 +8,7 @@ ansible rancher 部署代码,我们在剧本中区分如下角色:
 * agent agent 节点部署
 * server server 节点部署
 
-###common
+### common
 
 * 修改主机名称
 * 更新主机软件包
@@ -43,7 +43,7 @@ ansible rancher 部署代码,我们在剧本中区分如下角色:
 	* 创建docker用户组
 	* 把ansible用户添加入docker用户组
 
-###server
+### server
 
 下载`rancher/server`镜像,这里我们手动启动镜像,不适用自动启动,因为可能需要使用数据库存储
 		
@@ -51,7 +51,7 @@ ansible rancher 部署代码,我们在剧本中区分如下角色:
 
 建议生产环境使用数据库存储方案,使用之前请先创建数据库和授权用户.
 
-###agent
+### agent
 
 * 安装 httplib2, 用于获取server端的信息
 * 从server端获取默认项目id,这里主要是用于创建agent节点使用
@@ -60,3 +60,15 @@ ansible rancher 部署代码,我们在剧本中区分如下角色:
 * 下载 agent 镜像
 * 检测 agent 是否已经启动,如果没有启动:
 	* 启动 agent 容器
+
+---
+
+## 更新记录
+
+**1.1**
+
+在`common`任务中添加`ctop`容器数据监控工具
+
+只在工作节点部署:
+
+		ansible-playbook deploy-agent.yml -i xxx.hosts --tags="ctop"

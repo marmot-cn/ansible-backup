@@ -1,0 +1,10 @@
+# 安装ctop 监控工具
+- name: install ctop
+  copy:
+    src: ctop-0.5.1-linux-amd64
+    dest: /usr/local/bin/ctop
+    owner: ansible
+    group: ansible
+    mode: "0555"
+  tags:
+    - ctop
