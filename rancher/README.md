@@ -72,3 +72,22 @@ ansible rancher 部署代码,我们在剧本中区分如下角色:
 只在工作节点部署:
 
 		ansible-playbook deploy-agent.yml -i xxx.hosts --tags="ctop"
+		
+**1.2**
+
+在`common`任务添加对`/etc/sysctl.conf`配置文件修改, 修改
+
+* `net.netfilter.nf_conntrack_max`
+* `net.netfilter.nf_conntrack_tcp_timeout_established`
+* `net.netfilter.nf_conntrack_tcp_timeout_close_wait`
+* `net.netfilter.nf_conntrack_tcp_timeout_fin_wait`
+* `net.netfilter.nf_conntrack_tcp_timeout_time_wait`
+
+`net.netfilter.nf_conntrack_max`值计算方法`CONNTRACK_MAX = RAMSIZE (in bytes) / 16384 / (ARCH / 32)`.
+
+我们生产服务器为`8G`, 按照`4G`空余使用计算:
+
+`4*1024*1024*1024/16384/2 = 131072`.
+
+* `1024*1024*1024` = `1G`
+* `ARCH / 32` = `64 /32` = `2`

@@ -6,6 +6,9 @@
   yum: name=* state=latest
   become: true
 
+# 修改sysctl.conf
+- include: modify-sysctlconf
+
 # 关闭selinux
 - name: close selinux
   selinux: state=disabled
