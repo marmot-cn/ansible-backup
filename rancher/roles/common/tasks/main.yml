@@ -2,9 +2,9 @@
 - include: hostname.yml
 
 # 更新服务器软件包
-- name: upgrade all packages
-  yum: name=* state=latest
-  become: true
+#- name: upgrade all packages
+#  yum: name=* state=latest
+#  become: true
 
 # 修改sysctl.conf
 - include: modify-sysctlconf

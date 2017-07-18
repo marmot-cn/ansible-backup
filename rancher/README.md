@@ -65,7 +65,7 @@ ansible rancher 部署代码,我们在剧本中区分如下角色:
 
 ## 更新记录
 
-**1.1**
+#### 1.1
 
 在`common`任务中添加`ctop`容器数据监控工具
 
@@ -73,7 +73,13 @@ ansible rancher 部署代码,我们在剧本中区分如下角色:
 
 		ansible-playbook deploy-agent.yml -i xxx.hosts --tags="ctop"
 		
-**1.2**
+#### 1.2
+
+##### 取消更新所有包的任务
+
+在`common`任务中取消更新所有包的执行任务 `upgrade all packages`.
+
+##### sysctl.conf
 
 在`common`任务添加对`/etc/sysctl.conf`配置文件修改, 修改
 
@@ -91,3 +97,4 @@ ansible rancher 部署代码,我们在剧本中区分如下角色:
 
 * `1024*1024*1024` = `1G`
 * `ARCH / 32` = `64 /32` = `2`
+
