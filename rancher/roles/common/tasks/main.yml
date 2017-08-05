@@ -6,9 +6,6 @@
 #  yum: name=* state=latest
 #  become: true
 
-# 修改sysctl.conf
-- include: modify-sysctlconf
-
 # 关闭selinux
 - name: close selinux
   selinux: state=disabled
@@ -29,3 +26,6 @@
 # 安装ctop
 - name: install ctop
   include: ctop.yml
+
+# 修改sysctl.conf
+- include: modify-sysctlconf
