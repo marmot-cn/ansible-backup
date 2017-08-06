@@ -1,0 +1,9 @@
+#安装 mysql
+- include: mysql.yml
+
+#backend-crew 服务
+- include: backend-crew.yml
+
+#pingxiang 服务
+- include: pingxiang.yml
+

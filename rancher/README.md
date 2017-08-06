@@ -8,7 +8,7 @@ ansible rancher 部署代码,我们在剧本中区分如下角色:
 * agent agent 节点部署
 * server server 节点部署
 
-### common
+## common
 
 * 修改主机名称
 * 更新主机软件包
@@ -43,7 +43,7 @@ ansible rancher 部署代码,我们在剧本中区分如下角色:
 	* 创建docker用户组
 	* 把ansible用户添加入docker用户组
 
-### server
+## server
 
 下载`rancher/server`镜像,这里我们手动启动镜像,不适用自动启动,因为可能需要使用数据库存储
 		
@@ -51,7 +51,7 @@ ansible rancher 部署代码,我们在剧本中区分如下角色:
 
 建议生产环境使用数据库存储方案,使用之前请先创建数据库和授权用户.
 
-### agent
+## agent
 
 * 安装 httplib2, 用于获取server端的信息
 * 从server端获取默认项目id,这里主要是用于创建agent节点使用
@@ -65,7 +65,7 @@ ansible rancher 部署代码,我们在剧本中区分如下角色:
 
 ## 更新记录
 
-#### 1.1
+### 1.1
 
 在`common`任务中添加`ctop`容器数据监控工具
 
@@ -73,13 +73,25 @@ ansible rancher 部署代码,我们在剧本中区分如下角色:
 
 		ansible-playbook deploy-agent.yml -i xxx.hosts --tags="ctop"
 		
-#### 1.2
+### 1.2
 
-##### 取消更新所有包的任务
+#### 安装`lvm2`
+
+因为默认阿里云`centos 7`没有`lvm2`软件, 安装`lvm2`软件.
+
+#### 安装`docker-1.10.3`
+
+安装`docker-1.10.3`版本
+
+#### 删除多余的`docker`配置文件
+
+删除以前旧的无用的`docker`配置文件.
+
+#### 取消更新所有包的任务
 
 在`common`任务中取消更新所有包的执行任务 `upgrade all packages`.
 
-##### sysctl.conf
+#### sysctl.conf
 
 在`common`任务添加对`/etc/sysctl.conf`配置文件修改, 修改
 
@@ -97,4 +109,3 @@ ansible rancher 部署代码,我们在剧本中区分如下角色:
 
 * `1024*1024*1024` = `1G`
 * `ARCH / 32` = `64 /32` = `2`
-

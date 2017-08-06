@@ -10,26 +10,12 @@
     gpgkey: https://yum.dockerproject.org/gpg 
 
 # 安装 docker-engine (docker engine)
-- name: install docker 1.12.3
-  yum: name=docker-engine-1.12.3 state=present
+- name: install docker 1.10.3
+  yum: name=docker-engine-1.10.3 state=present
 
 # 开机启动docker
 - name: systemctl enable docker.service
   command: systemctl enable docker.service
-
-# 复制docker 服务的配置文件,我们修改了docker存储的路径,添加了docker的私有仓库地址(方便我们更新镜像)
-# - name: copy docker config file
-#   template:
-#     src: docker-config.j2
-#     dest: /etc/sysconfig/docker
-#   notify: restart docker
-
-# 复制 docker-storage 配置文件.修改了 docker 的存储形式 direct-lvm
-# - name: copy docker-storage config file
-#   template:
-#     src: docker-storage-config.j2
-#     dest: /etc/sysconfig/docker-storage
-
 
 # 添加 docker 用户组
 - name: make sure we have a 'docker' group, user can join docker group and run docker with non-root
@@ -62,7 +48,3 @@
   service: name={{ item }} state=started
   with_items:
     - docker
-
-# 重启 docker
-# - name: restart docker
-#   service: name=docker state=restarted

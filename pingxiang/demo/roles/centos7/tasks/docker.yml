@@ -1,0 +1,47 @@
+# 安装 docker 的 yum 源 (docker engine)
+- name: add docker repository
+  yum_repository:
+    name: dockerrepo
+    description: YUM docker repo
+    file: docker.repo
+    baseurl: https://yum.dockerproject.org/repo/main/centos/7/
+    enabled: yes
+    gpgcheck: yes
+    gpgkey: https://yum.dockerproject.org/gpg 
+
+# 安装 docker-engine (docker engine)
+- name: install docker 1.10.3
+  yum: name=docker-engine-1.10.3 state=present
+
+# 开机启动docker
+- name: systemctl enable docker.service
+  command: systemctl enable docker.service
+
+# 添加 docker 用户组
+- name: make sure we have a 'docker' group, user can join docker group and run docker with non-root
+  group:
+    name: docker
+    state: present
+
+# 把我们的操作用户添加入 docker 组
+- name: add docker group to ansible user
+  user:
+    name: ansible
+    groups: docker
+    append: yes
+
+# 启动服务
+- name: start docker
+  service: name={{ item }} state=started
+  with_items:
+    - docker
+      
+# 安装docker-compose
+- name: copy docker-compose
+  become: true
+  copy:
+    src: docker-compose-Linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    owner: root
+    group: root
+    mode: "u+x,g+x,o+x"

@@ -1,0 +1,19 @@
+# 创建mysql文件夹
+- name: create mysql dir
+  file: path=/home/ansible/mysql/ state=directory mode=0755
+
+# 复制mysql docker-compose.yml文件
+- name: copy mysql docker-compose yml
+  copy:
+    src: docker-compose-mysql.yml
+    dest: /home/ansible/mysql/docker-compose.yml
+    owner: ansible
+    group: ansible
+    mode: u=rw,g=r,o=r
+
+# 启动mysql容器
+- name: start mysql container
+  command: /usr/local/bin/docker-compose up -d
+  args:
+    chdir: /home/ansible/mysql/
+

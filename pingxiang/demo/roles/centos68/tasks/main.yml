@@ -1,0 +1,20 @@
+# 修改hostname
+- include: hostname.yml
+
+# 关闭selinux
+- name: install libselinux-python
+  yum: name=libselinux-python state=present
+
+- name: close selinux
+  selinux: state=disabled
+
+# 安装docker
+- name: install docker
+  include: docker.yml 
+
+# 安装git
+- name: install git
+  include: git.yml
+
+# 修改sysctl.conf
+# - include: modify-sysctlconf.yml

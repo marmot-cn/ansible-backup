@@ -4,4 +4,4 @@
   become: true
   roles: 
     - common
-    - server
+      #- server

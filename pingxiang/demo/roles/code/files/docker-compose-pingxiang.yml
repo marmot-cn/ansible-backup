@@ -1,0 +1,22 @@
+nginx: 
+  image: "registry.cn-hangzhou.aliyuncs.com/qixinyun/nginx-phpfpm-saas:1.3"
+  ports:
+    - "80:80"
+  links:
+    - "phpfpm"
+  volumes:
+    - ./:/var/www/html/
+  container_name: pingxiang-nginx
+  restart: always
+
+phpfpm:
+  image: "registry.cn-hangzhou.aliyuncs.com/marmot/phpfpm-7.0:1.0"
+  volumes:
+    - ./:/var/www/html/
+  external_links:
+    - "mysql-master:mysql"
+    - "service.backend-crew"
+  environment:
+    - DEV_ENV=local
+  container_name: pingxiang-phpfpm
+  restart: always

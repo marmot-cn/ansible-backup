@@ -1,0 +1,50 @@
+# 更新代码
+- name: clone backend-crew code
+  git:
+    repo: https://chloroplast1983:19831030d@code.aliyun.com/pingxiang/backend-crew.git
+    dest: /home/ansible/backend-crew
+    #clone: no
+    #update: no
+    
+# 因为使用挂载,临时生成路由缓存文件,添加权限.
+- name: create route cache dir
+  file: path=/home/ansible/backend-crew state=directory mode=0777 recurse=yes
+
+# 复制backend-crew docker-compose.yml文件
+- name: copy backend-crew docker-compose yml
+  copy:
+    src:  docker-compose-backend-crew.yml
+    dest: /home/ansible/backend-crew/docker-compose.yml
+    owner: ansible
+    group: ansible
+    mode: u=rw,g=r,o=r
+
+# 复制配置文件
+- name: copy backend-crew config file
+  copy:
+    src: config.backend-crew
+    dest: /home/ansible/backend-crew/config.php
+    owner: ansible
+    group: ansible
+    mode: u=rw,g=r,o=r
+    
+# 复制数据库文件
+- name: copy backend-crew database file
+  copy:
+    src: backend-crew.database.sql
+    dest: /home/ansible/backend-crew/initial.sql
+    owner: ansible
+    group: ansible
+    mode: u=rw,g=r,o=r
+
+# 启动环境
+- name: start backend-crew container
+  command: /usr/local/bin/docker-compose up -d
+  args:
+    chdir: /home/ansible/backend-crew/
+
+# 初始化数据
+- name: initial backend-crew database
+  command: bash -c "cat ./initial.sql | docker exec -i mysql-master /usr/bin/mysql -uroot -p123456"
+  args:
+    chdir: /home/ansible/backend-crew/

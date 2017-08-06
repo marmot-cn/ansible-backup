@@ -1,0 +1,52 @@
+# 更新代码
+- name: clone pingxiang code
+  git:
+    repo: https://chloroplast1983:19831030d@code.aliyun.com/pingxiang/pingxiang.git
+    dest: /home/ansible/pingxiang
+    #clone: no
+    #update: no
+
+- name: create storage cache dir
+  file: path=/home/ansible/pingxiang/storage state=directory mode=0777 recurse=yes
+
+- name: create bootstrap cache dir
+  file: path=/home/ansible/pingxiang/bootstrap/cache state=directory mode=0777
+
+# 复制pingxiang docker-compose.yml文件
+- name: copy pingxiang docker-compose yml
+  copy:
+    src:  docker-compose-pingxiang.yml
+    dest: /home/ansible/pingxiang/docker-compose.yml
+    owner: ansible
+    group: ansible
+    mode: u=rw,g=r,o=r
+
+# 复制配置文件
+- name: copy pingxiang config file
+  copy:
+    src: pingxiang-env.local
+    dest: /home/ansible/pingxiang/.env.local 
+    owner: ansible
+    group: ansible
+    mode: u=rw,g=r,o=r
+    
+# 复制数据库文件
+- name: copy pingxiang database file
+  copy:
+    src: pingxiang.database.sql
+    dest: /home/ansible/pingxiang/initial.sql
+    owner: ansible
+    group: ansible
+    mode: u=rw,g=r,o=r
+
+# 启动环境
+- name: start pingxiang container
+  command: /usr/local/bin/docker-compose up -d
+  args:
+    chdir: /home/ansible/pingxiang/
+
+# 初始化数据
+- name: initial pingxiang database
+  command: bash -c "cat ./initial.sql | docker exec -i mysql-master /usr/bin/mysql -uroot -p123456"
+  args:
+    chdir: /home/ansible/pingxiang/

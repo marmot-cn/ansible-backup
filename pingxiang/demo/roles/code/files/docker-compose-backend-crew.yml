@@ -1,0 +1,32 @@
+nginx:
+  image: "registry.cn-hangzhou.aliyuncs.com/marmot/nginx-phpfpm-saas:1.2"
+  links:
+    - "phpfpm"
+  volumes:
+    - ./:/var/www/html/
+  container_name: service.backend-crew
+  restart: always
+
+phpfpm:
+  image: "registry.cn-hangzhou.aliyuncs.com/marmot/phpfpm-7.0:1.0"
+  volumes:
+    - ./:/var/www/html/
+  links:
+    - "memcached-1:memcached-1"
+    - "memcached-2:memcached-2"
+  external_links:
+    - "mysql-master:mysql"
+  container_name: phpfpm.backend-crew
+  restart: always
+
+memcached-1:
+  image: "registry.aliyuncs.com/marmot/memcached:1.0"
+  command: memcached -m 32
+  container_name: memcached-1.backend-crew
+  restart: always
+
+memcached-2:
+  image: "registry.aliyuncs.com/marmot/memcached:1.0"
+  command: memcached -m 32
+  container_name: memcached2.backend-crew
+  restart: always
