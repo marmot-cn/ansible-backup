@@ -1,5 +1,7 @@
 # 配置服务器的安全设置
 - name: configure servers sercurity environment
   hosts: servers
+  become: true
   tasks:
     - include: tasks/sshd_config.yml
+    - include: tasks/disable_ping.yml
