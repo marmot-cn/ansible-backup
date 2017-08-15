@@ -10,8 +10,8 @@
     gpgkey: https://yum.dockerproject.org/gpg 
 
 # 安装 docker-engine (docker engine)
-- name: install docker 1.10.3
-  yum: name=docker-engine-1.10.3 state=present
+#- name: install docker 1.10.3
+#  yum: name=docker-engine-1.10.3 state=present
 
 # 开机启动docker
 - name: systemctl enable docker.service

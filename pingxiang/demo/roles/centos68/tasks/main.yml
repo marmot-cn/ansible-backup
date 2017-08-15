@@ -17,4 +17,4 @@
   include: git.yml
 
 # 修改sysctl.conf
-# - include: modify-sysctlconf.yml
+ - include: modify-sysctlconf.yml

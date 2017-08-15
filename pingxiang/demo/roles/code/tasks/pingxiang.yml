@@ -40,10 +40,10 @@
     mode: u=rw,g=r,o=r
 
 # 启动环境
-- name: start pingxiang container
-  command: /usr/local/bin/docker-compose up -d
-  args:
-    chdir: /home/ansible/pingxiang/
+#- name: start pingxiang container
+#  command: /usr/local/bin/docker-compose up -d
+#  args:
+#    chdir: /home/ansible/pingxiang/
 
 # 初始化数据
 - name: initial pingxiang database
