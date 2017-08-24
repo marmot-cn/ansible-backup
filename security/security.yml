@@ -3,5 +3,6 @@
   hosts: servers
   become: true
   tasks:
-    - include: tasks/sshd_config.yml
+    - include: tasks/sshd.yml
     - include: tasks/disable_ping.yml
+    - include: tasks/tmout.yml
