@@ -1,6 +1,6 @@
 # 下载搭建rancher镜像
 - name: pull an image
-  command: docker pull rancher/server
+  command: docker pull rancher/server:v1.6.5
 
 #- name: rancher/server
 #  docker_container:
