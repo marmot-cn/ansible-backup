@@ -3,3 +3,4 @@
 .DS_Store
 host.yml
 *.hosts
+backup
