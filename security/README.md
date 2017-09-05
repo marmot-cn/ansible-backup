@@ -2,6 +2,8 @@
 
 ---
 
+### 简介
+
 主要用于执行一些部署服务器前期的配置工作
 
 ### sshd_config.yml
@@ -66,6 +68,44 @@ When                Type  Source                                           Valid
 faillock --user <username> --reset
 ```
 
+#### 添加密码复杂度
+
+在`/etc/pam.d/passwd`文件中添加`pam_pwquality.so`.
+
+更新配置文件`/etc/security/pwquality.conf`:
+
+* `minlen`密码最小长度限制
+* `maxclassrepeat`在新密码中设置同一类的允许连续字符的最大数目
+* `dcredit=-1`在新密码中至少需要一个数字
+* `ucredit=-1`在新密码中至少需要一个大写字符
+* `lcredit = -1`在新密码中至少需要一个小写字符
+* `ocredit = -1`密码包括至少一个特殊字符
+* `maxsequence = 3`在新密码中设置单调字符序列的最大长度(ex⇒'12345','fedc')
+* `difok=5`设置新密码中不能出现在旧密码中的字符数
+
+
 #### 更新用户密码过期时间
 
-chage -l  root
+`chage -M` 设置用户密码过期天数.
+
+`chage -l userName` 查看某个用户密码状态, 可以查见过期天数.
+
+## 版本
+
+### 1.0
+
+* 更新`sshd`配置修改,变更端口,禁止`root`用户.
+* 添加`security.sh`脚本, 自动初始化`ansible`用户和免登陆
+
+### 1.1
+
+* 添加禁ping功能
+
+### 2.0
+
+* 剧本改写为`role`模式
+* 针对用户添加密码过期时间
+* 添加用户密码复杂度
+* 添加针对同时在线人数限制
+* 添加对资源限制
+* 添加密码登录失败超过一定次数限制登录功能
