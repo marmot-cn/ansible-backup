@@ -90,6 +90,12 @@ faillock --user <username> --reset
 
 `chage -l userName` 查看某个用户密码状态, 可以查见过期天数.
 
+##### /etc/login.defs
+
+* 修改`PASS_MAX_DAYS`新添加用户的密码默认过期天数
+* 修改`PASS_MIN_LEN`新添加用户的密码默认长度为`12`
+* 修改`PASS_WARN_AGE`密码过期警告时间为`30`天
+
 ## 版本
 
 ### 1.0
@@ -109,3 +115,10 @@ faillock --user <username> --reset
 * 添加针对同时在线人数限制
 * 添加对资源限制
 * 添加密码登录失败超过一定次数限制登录功能
+
+### 2.1
+
+* 修改`/etc/login.defs`
+	* PASS_MAX_DAYS
+	* PASS_MIN_LEN
+	* PASS_WARN_AGE

@@ -1,2 +1,1 @@
 users: ['ansible','root']
-user_password_valid_time: 90
