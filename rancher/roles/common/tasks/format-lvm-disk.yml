@@ -1,6 +1,6 @@
 #  install lvm2
 - name: install lvm2
-  yum: name=lvm2 state=present
+  yum: name=lvm2 state=latest
 
 # 硬盘分区
 - name: lvm data disk partion
@@ -43,7 +43,7 @@
     dest: /etc/lvm/profile/docker-thinpool.profile
   when: lvminfo.stdout.find('docker') == -1
 
-# 更新配置
+  # 更新配置, 这个需要更新包, 低版本没有 --metadataprofile 选项
 - name: lvchange docker thinpool
   command: lvchange --metadataprofile docker-thinpool docker/thinpool
   when: lvminfo.stdout.find('docker') == -1

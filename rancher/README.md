@@ -77,7 +77,7 @@ ansible rancher 部署代码,我们在剧本中区分如下角色:
 
 #### 安装`lvm2`
 
-因为默认阿里云`centos 7`没有`lvm2`软件, 安装`lvm2`软件.
+因为默认阿里云`centos 7`没有`lvm2`软件, 安装`lvm2`软件. 且保证为最新版. 因为旧版使用`lvchange`命令没有`--metadataprofile`选项.
 
 #### 安装`docker-1.10.3`
 
