@@ -1,7 +1,7 @@
 # 更新我们yum包以及内核
-- name: upgrade yum packages
-  become: true
-  yum: name=* state=latest
+#- name: upgrade yum packages
+#  become: true
+#  yum: name=* state=latest
                                                
 # 服务器安装我们必须用的软件 git docker
 - name: install yum packages
