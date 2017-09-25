@@ -122,3 +122,19 @@ faillock --user <username> --reset
 	* PASS_MAX_DAYS
 	* PASS_MIN_LEN
 	* PASS_WARN_AGE
+
+### 2.1
+
+#### 解决`locale` 设置程序运行语言环境
+
+`-bash: warning: setlocale: LC_CTYPE: cannot change locale (UTF-8): No such file or directory`
+
+通过`locale -a`检索出支持的语言环境.
+
+添加`/etc/environment`文件.
+
+```shell
+
+LANG=zh_CN.utf8
+LC_ALL=zh_CN.utf8
+```
