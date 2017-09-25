@@ -1,17 +1,10 @@
-# 安装 docker 的 yum 源 (docker engine)
-- name: add docker repository
-  yum_repository:
-    name: dockerrepo
-    description: YUM docker repo
-    file: docker.repo
-    baseurl: https://yum.dockerproject.org/repo/main/centos/7/
-    enabled: yes
-    gpgcheck: yes
-    gpgkey: https://yum.dockerproject.org/gpg 
+# 安装 docker 的 yum 源 (docker ce)
+- name: install docker ce repo
+  command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 
-# 安装 docker-engine (docker engine)
-- name: install docker 1.10.3
-  yum: name=docker-engine-1.10.3 state=present
+# 安装 docker-ce-17.06.2.ce
+- name: install docker ce-17.06.2.ce
+  yum: name=docker-ce-17.06.2.ce state=present
 
 # 开机启动docker
 - name: systemctl enable docker.service
@@ -30,16 +23,23 @@
     groups: docker
     append: yes
 
-# 修改 docker 配置文件 (docker engine)
+# 修改 docker 配置文件 (docker ce)
 # 创建配置文件夹
-- name: create docker config file dir
-  file: path=/etc/systemd/system/docker.service.d state=directory mode=0755
-
-- name: copy config file (docker engine)
+- name: copy docker config file
   template: 
-    src: docker.conf.j2
-    dest: /etc/systemd/system/docker.service.d/docker.conf
+    src: docker.service.j2
+    dest: /usr/lib/systemd/system/docker.service
 
+# 更新docker存储引擎配置文件
+- name: cretae docker storage config file dir
+  file: path=/etc/docker state=directory mode=0755
+
+- name: set up docker storage driver devicemapper
+  template:
+    src: docker.daemon.json.j2
+    dest: /etc/docker/daemon.json
+
+# 重新加载docker配置
 - name: systemctl daemon-reload
   command: systemctl daemon-reload
 

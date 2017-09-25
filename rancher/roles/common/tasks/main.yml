@@ -1,10 +1,13 @@
 # 修改hostname
 - include: hostname.yml
 
-# 更新服务器软件包
-#- name: upgrade all packages
-#  yum: name=* state=latest
-#  become: true
+# install packages 
+- name: install required packages
+  yum: name={{item}} state=latest
+  with_items:
+    - lvm2
+    - yum-utils
+    - device-mapper-persistent-data
 
 # 关闭selinux
 - name: close selinux

@@ -1,7 +1,3 @@
-#  install lvm2
-- name: install lvm2
-  yum: name=lvm2 state=latest
-
 # 硬盘分区
 - name: lvm data disk partion
   script: lvm-disk.sh "{{ disk_lvm }}"
