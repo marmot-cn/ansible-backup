@@ -4,3 +4,4 @@
 host.yml
 *.hosts
 backup
+passwd

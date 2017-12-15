@@ -138,3 +138,16 @@ faillock --user <username> --reset
 LANG=zh_CN.utf8
 LC_ALL=zh_CN.utf8
 ```
+
+### 2.2
+
+#### 修改`/etc/environment`为空, 解决在虚拟机里面默认为中文而显示乱码的情况
+#### 修改`security.sh`脚本
+
+从`passwd`文件读取密码. 如果密码包含特殊字符需要外围用双引号包围起来.
+
+例如我的密码是`'PHDh$=b5X<5\wwn`, 则在`passwd`文件里面必须写入
+
+```
+"'PHDh$=b5X<5\wwn"
+```

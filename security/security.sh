@@ -1,7 +1,8 @@
 #!/bin/bash
 
 read -p "Enther Server ip:" ip
-read -s -p "Enther ansible password:" password
+#read -s -p "Enther ansible password:" password
+password=`sed -n '1p' ./passwd`
 
 echo ""
 

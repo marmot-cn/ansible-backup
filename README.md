@@ -18,9 +18,11 @@
 
 当我们创建了一台新的服务器时候,我们需要做如下操作.这里的操作我没有放到剧本里是因为在是用 root 和 密码登陆时候ansible链接会报异常.而且为了安全考虑如下操作还是换成人工处理方式.等以后ansible使用熟练在考虑替换的部分.
 
-**`security/security.sh`**
+##### `security/security.sh`
 
-./security.sh xxxx.xxx.xxx(服务器IP)
+`./security.sh`
+
+连续输入服务器的`ip`地址和`ansible`账户的密码.
 
 连续输入ansible账户对应该台服务器的密码即可.
 
@@ -40,13 +42,17 @@
 
 ### 常用操作
 
-**从组中筛选主机**
+#### 检查模式
+
+`-- check`将不会对远程的系统做出任何修改. 会做语法检查.
+
+#### 从组中筛选主机
 
 我们从test组筛选出 minon1 主机
 
 		ansible test --limit minon1 -m ping
 		
-**tags**
+#### tags
 
 执行符合tag的task
 
