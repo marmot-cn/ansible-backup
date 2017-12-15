@@ -119,3 +119,9 @@ ansible rancher 部署代码,我们在剧本中区分如下角色:
 目前最新稳定版是`17.06.2.ce--1.el7.centos`
 
 `yum install docker-ce-17.06.2.ce`
+
+### 废弃更新
+
+1. 把`docker`转移到单独的部署文件夹.
+2. `rancher`的`master`和`agent`节点都手动部署.不使用`ansible`部署.
+3. 后期想考虑到把`rancher`逐步过多到`k8s`.

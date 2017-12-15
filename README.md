@@ -8,6 +8,9 @@
 * k8s : 沙箱和生产的k8s部署剧本
 * rancher : 沙箱和生产的rancher部署剧本
 * repository : docker 私有仓库部署剧本,现在暂时使用阿里云的私有仓库.暂不使用.
+* docker : 用于在服务器部署`dokcer`.
+	* 阿里云版本
+	* 虚拟机版本
 
 ### 使用前要准备的工作
 
@@ -70,3 +73,7 @@
 #### repository
 
 仓库服务器,暂时因为使用阿里云的容器仓库,这个暂时不做更新.
+
+#### docker
+
+主要用于在服务器部署`docker`的生产环境. 针对`linux`版本为`centos 7 min` [docker play book](./docker "docker play book")
