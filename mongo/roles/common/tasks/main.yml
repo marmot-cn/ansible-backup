@@ -1,0 +1,22 @@
+# 关闭tuned
+- name: stop tuned
+  systemd:
+    name: tuned
+    enabled: no
+    state: stopped
+
+# 关闭 Transparent Huge Pages Settings
+- name: copy THP script
+  template: 
+    src: disable-transparent-hugepages.j2
+    dest: /etc/init.d/disable-transparent-hugepages
+    mode: 0755
+
+- name: enable disable-transparent-hugepages service
+  command: chkconfig --add disable-transparent-hugepages
+
+- name: limits
+  include: limits.yml
+
+- name: sysctl
+  include: sysctl.yml

@@ -3,5 +3,5 @@
   become: true
   roles:
     - virtual
-      #    - common
-      #- docker
+    - common
+    - docker

@@ -1,4 +1,3 @@
-disk: "/dev/sdb"
 disk_docker_partion: 1
 disk_docker_size: "+40G"
 disk_data_partion: 2
