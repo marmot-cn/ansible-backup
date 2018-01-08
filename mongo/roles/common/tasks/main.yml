@@ -20,3 +20,36 @@
 
 - name: sysctl
   include: sysctl.yml
+
+- name: add mongodb group
+  group:
+    name: mongodb
+    state: present
+    gid: 1010
+
+- name: add mongodb user
+  user:
+    name: mongodb
+    state: present
+    uid: 1010
+    group: mongodb
+    shell: /sbin/nologin
+
+# 把我们的操作用户添加入 mongodb 组
+- name: add mongodb group to ansible user
+  user:
+    name: ansible
+    groups: mongodb
+    append: yes
+
+- name: create mongo directires
+  file:
+    path: '/data/mongodb/{{ item }}'
+    state: directory
+    owner: mongodb
+    group: mongodb
+    mode: 0750
+  with_items:
+    - ca
+    - data
+    - config
