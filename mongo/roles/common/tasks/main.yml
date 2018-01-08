@@ -21,6 +21,9 @@
 - name: sysctl
   include: sysctl.yml
 
+- name: install git
+  yum: name=git state=present
+
 - name: add mongodb group
   group:
     name: mongodb
