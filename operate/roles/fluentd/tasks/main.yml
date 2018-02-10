@@ -1,0 +1,8 @@
+# 更新docker存储引擎配置文件
+- name: cretae fluentd file
+  file: path=/data/fluentd state=directory mode=0755
+
+- name: sync config
+  copy:
+    src: fluentd.conf
+    dest: /data/fluentd/fluentd.conf
