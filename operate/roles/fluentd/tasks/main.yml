@@ -6,3 +6,13 @@
   copy:
     src: fluentd.conf
     dest: /data/fluentd/fluentd.conf
+
+- name: crontab clean docker images
+  cron:
+    name: "clean unused docker images"
+    state: present
+    user: ansible
+    hour: 3
+    job: "docker rmi `docker images | awk '{print $3}'` > /dev/null"
+  tags:
+    - cron
