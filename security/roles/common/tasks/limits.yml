@@ -11,6 +11,6 @@
     - {dest: '/etc/security/limits.conf', domain: '*', limit_type: 'hard',limit_item: 'nproc', value: '65535'}
     - {dest: '/etc/security/limits.conf', domain: '*', limit_type: 'soft',limit_item: 'nofile', value: '65535'}
     - {dest: '/etc/security/limits.conf', domain: '*', limit_type: 'hard',limit_item: 'nofile', value: '65535'}
-    - {dest: '/etc/security/limits.conf', domain: '@sshallow', limit_type: 'hard',limit_item: 'maxlogins', value: '2'}
+    - {dest: '/etc/security/limits.conf', domain: '@sshallow', limit_type: 'hard',limit_item: 'maxlogins', value: '4'}
     - {dest: '/etc/security/limits.d/20-nproc.conf', domain: '*', limit_type: 'soft',limit_item: 'nproc', value: '65535'}
     - {dest: '/etc/security/limits.d/20-nproc.conf', domain: '*', limit_type: 'hard',limit_item: 'nproc', value: '65535'}
